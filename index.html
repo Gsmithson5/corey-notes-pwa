@@ -17,37 +17,26 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-  <!-- PIN / Lock Screen Modal -->
+  <!-- High Security Passkey Modal -->
   <div id="authModal" class="modal-overlay">
     <div class="modal glass-card">
       <div class="auth-icon">
-        <i class="fa-solid fa-shield-halved"></i>
+        <i class="fa-solid fa-vault"></i>
       </div>
       <h2>Corey Secure Notes</h2>
-      <p class="auth-subtitle">Encrypted 24/7 Cloud Sync</p>
+      <p class="auth-subtitle">Encrypted 24/7 Cloud Sync & AI Bridge</p>
       
-      <div class="pin-display" id="pinDisplay">
-        <span class="dot"></span>
-        <span class="dot"></span>
-        <span class="dot"></span>
-        <span class="dot"></span>
+      <div class="auth-form">
+        <label for="masterPassInput" class="pass-label">Enter Master Passkey or PIN</label>
+        <div class="pass-input-wrapper">
+          <input type="password" id="masterPassInput" placeholder="Master Key..." autocomplete="current-password" autofocus>
+        </div>
+        <button id="unlockBtn" class="unlock-btn">
+          <i class="fa-solid fa-lock-open"></i> Unlock & Remember Device
+        </button>
       </div>
       
-      <div class="pin-keypad">
-        <button class="key-btn" data-num="1">1</button>
-        <button class="key-btn" data-num="2">2</button>
-        <button class="key-btn" data-num="3">3</button>
-        <button class="key-btn" data-num="4">4</button>
-        <button class="key-btn" data-num="5">5</button>
-        <button class="key-btn" data-num="6">6</button>
-        <button class="key-btn" data-num="7">7</button>
-        <button class="key-btn" data-num="8">8</button>
-        <button class="key-btn" data-num="9">9</button>
-        <button class="key-btn action-key" id="clearPin"><i class="fa-solid fa-rotate-left"></i></button>
-        <button class="key-btn" data-num="0">0</button>
-        <button class="key-btn action-key" id="deletePin"><i class="fa-solid fa-delete-left"></i></button>
-      </div>
-      
+      <p class="auth-hint">Unlock once — your phone and PC will stay securely logged in permanently.</p>
       <p id="authError" class="auth-error"></p>
     </div>
   </div>
@@ -66,10 +55,10 @@
         <span id="syncIndicator" class="sync-status synced" title="Sync Status">
           <i class="fa-solid fa-cloud"></i>
         </span>
-        <button id="manualSyncBtn" class="icon-btn" title="Sync Now">
+        <button id="manualSyncBtn" class="icon-btn" title="Sync Cloud Now">
           <i class="fa-solid fa-arrows-rotate"></i>
         </button>
-        <button id="lockAppBtn" class="icon-btn" title="Lock App">
+        <button id="lockAppBtn" class="icon-btn" title="Lock App on this device">
           <i class="fa-solid fa-lock"></i>
         </button>
       </div>
@@ -109,7 +98,7 @@
     <div class="editor-container glass-card">
       <div class="editor-header">
         <button id="closeEditorBtn" class="icon-btn-text">
-          <i class="fa-solid fa-chevron-left"></i> Done
+          <i class="fa-solid fa-chevron-left"></i> Done & Sync
         </button>
         <div class="editor-actions">
           <button id="voiceDictateBtn" class="icon-btn" title="Voice to Text">
@@ -146,13 +135,13 @@
         <div class="formatting-toolbar">
           <button type="button" class="tool-btn" data-action="todo"><i class="fa-solid fa-square-check"></i> Task</button>
           <button type="button" class="tool-btn" data-action="bullet"><i class="fa-solid fa-list-ul"></i> Bullet</button>
-          <button type="button" class="tool-btn" data-action="bold"><i class="fa-solid fa-bold"></i></button>
-          <button type="button" class="tool-btn" data-action="italic"><i class="fa-solid fa-italic"></i></button>
-          <button type="button" class="tool-btn" data-action="heading"><i class="fa-solid fa-heading"></i></button>
-          <button type="button" class="tool-btn" data-action="code"><i class="fa-solid fa-code"></i></button>
+          <button type="button" class="tool-btn" data-action="bold"><i class="fa-solid fa-bold"></i> Bold</button>
+          <button type="button" class="tool-btn" data-action="italic"><i class="fa-solid fa-italic"></i> Italic</button>
+          <button type="button" class="tool-btn" data-action="heading"><i class="fa-solid fa-heading"></i> Heading</button>
+          <button type="button" class="tool-btn" data-action="code"><i class="fa-solid fa-code"></i> Code</button>
         </div>
 
-        <textarea id="noteContent" class="editor-textarea" placeholder="Start typing... Everything auto-saves and auto-syncs instantly."></textarea>
+        <textarea id="noteContent" class="editor-textarea" placeholder="Start typing... Everything auto-saves and auto-syncs instantly across phone & PC."></textarea>
       </div>
     </div>
   </div>

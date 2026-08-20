@@ -1,0 +1,162 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Corey Notes</title>
+  
+  <!-- PWA & Mobile Meta -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Corey Notes">
+  <meta name="theme-color" content="#0B0F19">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <!-- PIN / Lock Screen Modal -->
+  <div id="authModal" class="modal-overlay">
+    <div class="modal glass-card">
+      <div class="auth-icon">
+        <i class="fa-solid fa-shield-halved"></i>
+      </div>
+      <h2>Corey Secure Notes</h2>
+      <p class="auth-subtitle">Encrypted 24/7 Cloud Sync</p>
+      
+      <div class="pin-display" id="pinDisplay">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+      
+      <div class="pin-keypad">
+        <button class="key-btn" data-num="1">1</button>
+        <button class="key-btn" data-num="2">2</button>
+        <button class="key-btn" data-num="3">3</button>
+        <button class="key-btn" data-num="4">4</button>
+        <button class="key-btn" data-num="5">5</button>
+        <button class="key-btn" data-num="6">6</button>
+        <button class="key-btn" data-num="7">7</button>
+        <button class="key-btn" data-num="8">8</button>
+        <button class="key-btn" data-num="9">9</button>
+        <button class="key-btn action-key" id="clearPin"><i class="fa-solid fa-rotate-left"></i></button>
+        <button class="key-btn" data-num="0">0</button>
+        <button class="key-btn action-key" id="deletePin"><i class="fa-solid fa-delete-left"></i></button>
+      </div>
+      
+      <p id="authError" class="auth-error"></p>
+    </div>
+  </div>
+
+  <!-- Main App Layout -->
+  <div id="app" class="app-container hidden">
+    <!-- Header -->
+    <header class="app-header glass-header">
+      <div class="header-left">
+        <div class="app-badge">
+          <i class="fa-solid fa-bolt text-cyan"></i>
+          <span>COREY NOTES</span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <span id="syncIndicator" class="sync-status synced" title="Sync Status">
+          <i class="fa-solid fa-cloud"></i>
+        </span>
+        <button id="manualSyncBtn" class="icon-btn" title="Sync Now">
+          <i class="fa-solid fa-arrows-rotate"></i>
+        </button>
+        <button id="lockAppBtn" class="icon-btn" title="Lock App">
+          <i class="fa-solid fa-lock"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- Category / Tags Bar -->
+    <div class="filter-bar">
+      <button class="filter-chip active" data-filter="all">All Notes</button>
+      <button class="filter-chip" data-filter="pinned"><i class="fa-solid fa-thumbtack"></i> Pinned</button>
+      <button class="filter-chip" data-filter="Tasks">Tasks</button>
+      <button class="filter-chip" data-filter="Work">Work</button>
+      <button class="filter-chip" data-filter="Fitness">Fitness</button>
+      <button class="filter-chip" data-filter="Ideas">Ideas</button>
+      <button class="filter-chip" data-filter="Antigravity">🤖 AI Collab</button>
+    </div>
+
+    <!-- Search Bar -->
+    <div class="search-box glass-card">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="text" id="searchInput" placeholder="Search notes, tags, checklists...">
+      <button id="clearSearch" class="clear-btn hidden"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+
+    <!-- Notes Grid / List View -->
+    <main class="notes-container" id="notesList">
+      <!-- Notes injected by app.js -->
+    </main>
+
+    <!-- Floating Action Button for New Note -->
+    <button id="newNoteBtn" class="fab-btn" title="Create New Note">
+      <i class="fa-solid fa-plus"></i>
+    </button>
+  </div>
+
+  <!-- Note Editor Overlay / Drawer -->
+  <div id="editorOverlay" class="editor-overlay hidden">
+    <div class="editor-container glass-card">
+      <div class="editor-header">
+        <button id="closeEditorBtn" class="icon-btn-text">
+          <i class="fa-solid fa-chevron-left"></i> Done
+        </button>
+        <div class="editor-actions">
+          <button id="voiceDictateBtn" class="icon-btn" title="Voice to Text">
+            <i class="fa-solid fa-microphone"></i>
+          </button>
+          <button id="editorPinBtn" class="icon-btn" title="Pin Note">
+            <i class="fa-solid fa-thumbtack"></i>
+          </button>
+          <button id="editorDeleteBtn" class="icon-btn text-danger" title="Delete Note">
+            <i class="fa-solid fa-trash"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="editor-body">
+        <input type="text" id="noteTitle" class="editor-title" placeholder="Title...">
+        
+        <div class="editor-meta-bar">
+          <div class="tag-selector">
+            <i class="fa-solid fa-tag"></i>
+            <select id="noteTag">
+              <option value="General">General</option>
+              <option value="Tasks">Tasks</option>
+              <option value="Work">Work</option>
+              <option value="Fitness">Fitness</option>
+              <option value="Ideas">Ideas</option>
+              <option value="Antigravity">🤖 Antigravity AI</option>
+            </select>
+          </div>
+          <span id="noteTimestamp" class="editor-time"></span>
+        </div>
+
+        <!-- Quick Markdown / Action Toolbar -->
+        <div class="formatting-toolbar">
+          <button type="button" class="tool-btn" data-action="todo"><i class="fa-solid fa-square-check"></i> Task</button>
+          <button type="button" class="tool-btn" data-action="bullet"><i class="fa-solid fa-list-ul"></i> Bullet</button>
+          <button type="button" class="tool-btn" data-action="bold"><i class="fa-solid fa-bold"></i></button>
+          <button type="button" class="tool-btn" data-action="italic"><i class="fa-solid fa-italic"></i></button>
+          <button type="button" class="tool-btn" data-action="heading"><i class="fa-solid fa-heading"></i></button>
+          <button type="button" class="tool-btn" data-action="code"><i class="fa-solid fa-code"></i></button>
+        </div>
+
+        <textarea id="noteContent" class="editor-textarea" placeholder="Start typing... Everything auto-saves and auto-syncs instantly."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

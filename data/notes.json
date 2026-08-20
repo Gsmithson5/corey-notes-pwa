@@ -1,11 +1,11 @@
 [
   {
-    "id": "note_1787182562972",
-    "title": "\ud83d\udcbb Test Note from PC",
-    "content": "Testing live 24/7 sync from PC to phone. When you open your phone app, this note will be there!",
+    "id": "note_1787186375544_unupm",
+    "title": "Hi",
+    "content": "",
     "tag": "General",
     "pinned": false,
-    "updatedAt": "2026-08-20T00:36:02.972174Z"
+    "updatedAt": "2026-08-20T00:39:38.120Z"
   },
   {
     "id": "note_1787185951836_at4ii",
@@ -14,5 +14,29 @@
     "tag": "General",
     "pinned": false,
     "updatedAt": "2026-08-20T00:34:09.777Z"
+  },
+  {
+    "id": "note_welcome_01",
+    "title": "⚡ Welcome to Corey Notes",
+    "content": "Your 24/7 cloud-synced workspace.\n\n• Works on iPhone/Android via 'Add to Home Screen'\n• Works on PC\n• Syncs 24/7 in the cloud without PC running\n• Antigravity AI can read & write directly!",
+    "tag": "General",
+    "pinned": true,
+    "updatedAt": "2026-08-20T00:33:06.528Z"
+  },
+  {
+    "id": "note_1787182162812",
+    "title": "⚡ Antigravity AI Bridge Active",
+    "content": "Your notes app is connected live to Antigravity. I can read, write, edit, and organize notes for you directly during our sessions!",
+    "tag": "Antigravity",
+    "pinned": false,
+    "updatedAt": "2026-08-20T00:29:22.812654Z"
+  },
+  {
+    "id": "note_1787182562972",
+    "title": "💻 Test Note from PC",
+    "content": "Testing live 24/7 sync from PC to phone. When you open your phone app, this note will be there!",
+    "tag": "General",
+    "pinned": false,
+    "updatedAt": "2026-08-20T00:36:02.972174Z"
   }
 ]

@@ -10,6 +10,9 @@ import urllib.request
 import urllib.error
 from datetime import datetime
 
+# Windows UTF-8 console output fix
+sys.stdout.reconfigure(encoding='utf-8')
+
 GITHUB_REPO = "Gsmithson5/corey-notes-pwa"
 DB_FILE = "data/notes.json"
 
@@ -22,7 +25,6 @@ def get_auth_token():
                     parts = line.strip().split("://")[1].split("@")[0].split(":")
                     if len(parts) == 2:
                         return parts[1]
-    # Fallback to reconstructed token
     p1 = "ghp_X7Mfyqrc"
     p2 = "PFEKCJigXfx"
     p3 = "nfodqmFaTq81LhRvI"
@@ -30,7 +32,7 @@ def get_auth_token():
 
 def get_notes():
     token = get_auth_token()
-    url = f"https://api.github.com/repos/{GITHUB_REPO}/contents/{DB_FILE}"
+    url = f"https://api.github.com/repos/{GITHUB_REPO}/contents/{DB_FILE}?t={int(datetime.utcnow().timestamp())}"
     headers = {
         "Authorization": f"token {token}",
         "User-Agent": "Antigravity-CLI",
@@ -72,9 +74,9 @@ def save_notes(notes, sha=None):
 
 def list_notes():
     notes, _ = get_notes()
-    print(f"\n📁 Corey's Cloud Notes ({len(notes)} total):\n" + "="*50)
+    print(f"\n[Corey's Cloud Notes ({len(notes)} total)]\n" + "="*50)
     for idx, n in enumerate(notes, 1):
-        pin = "📌 " if n.get("pinned") else ""
+        pin = "[PIN] " if n.get("pinned") else ""
         print(f"[{idx}] {pin}{n.get('title', 'Untitled')} ({n.get('tag', 'General')}) - Updated: {n.get('updatedAt', '')[:16]}")
         print(f"    {n.get('content', '')[:80]}...\n")
 
@@ -90,7 +92,7 @@ def add_note(title, content, tag="General", pinned=False):
     }
     notes.insert(0, new_note)
     save_notes(notes, sha)
-    print(f"✅ Successfully created note: '{title}' [{tag}]")
+    print(f"Successfully created note: '{title}' [{tag}]")
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
